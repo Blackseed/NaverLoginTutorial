@@ -25,7 +25,7 @@
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="<c:url value="/home" />">home</a></li>
                   <li><a href="<c:url value="/login" />">Login</a></li>
-                  <li><a href="<c:url value="/join" />">Sign-in</a></li>
+                  <li><a href="<c:url value="/join" />">Join</a></li>
                 </ul>
               </nav>
             </div>
