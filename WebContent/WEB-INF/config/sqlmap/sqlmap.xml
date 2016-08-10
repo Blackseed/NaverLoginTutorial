@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+	<resultMap id="userResultMap" type="User">
+		<result property="id" column="id" />
+		<result property="userName" column="username" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="nickName" column="nickname" />
+		<result property="mobile" column="mobile" />
+		<result property="createDate" column="create_date" />
+		<result property="modifyDate" column="modify_date" />
+	</resultMap>
+
+	<resultMap id="snsUserResultMap" type="SnsUser" extends="userResultMap">
+		<result property="snsId" column="sns_id" />
+		<result property="snsType" column="sns_type" />
+		<result property="snsName" column="sns_name" />
+		<result property="snsProfile" column="sns_profile" />
+		<result property="snsConnectDate" column="sns_connect_date" />
+
+	</resultMap>
+
+
+	<select id="selectUserById" resultMap="userResultMap">
+		select * from users
+		where id = #{id}
+	</select>
+
+	<select id="selectUserByUserName" resultMap="userResultMap">
+		select * from users
+		where username = #{userName}
+	</select>
+
+
+	<select id="selectSnsUserBySnsId" resultMap="snsUserResultMap">
+		select 	a.username,
+				a.password,
+				a.email,
+				a.nickname,
+				a.mobile,
+				a.create_date,
+				a.modify_date,
+				b.sns_id,
+				b.sns_type,
+				b.sns_name,
+				b.sns_profile,
+				b.sns_connect_date				 
+		from 	users a,
+				sns_info b
+		where
+				a.id = b.id
+			AND b.sns_id = #{snsId}
+	</select>
+
+
+	<insert id="insertNormalUser" parameterType="User">
+		insert into	users(username, password, email, nickname, mobile, create_date, modify_date )
+			values	(#{userName}, #{password},#{email}, #{nickName}, #{mobile}, now(), now())
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertSnsUser" parameterType="SnsUser">
+		insert into sns_info(id, sns_id, sns_type, sns_name, sns_profile, sns_connect_date)
+			values (#{id}, #{snsId}, #{snsType}, #{snsName}, #{snsProfile}, now() )
+	</insert>
+
+
+
+</mapper>

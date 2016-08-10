@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.naver.naverlogintutorial.dao" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/users" />
+		<property name="username" value="root" />
+		<property name="password" value="spdlqjfhrmdls" />
+		<property name="validationQuery" value="SELECT 1 " />
+	</bean>
+
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/config/mybatis-configuration.xml" />
+		<property name="mapperLocations" value="/WEB-INF/config/sqlmap/sqlmap.xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="userDAO" class="com.naver.naverlogintutorial.dao.UserDAOImpl" />
+	<bean id="baseDAO" class="com.naver.naverlogintutorial.dao.BaseDAO" />
+	
+	<bean id="captchaDAO" class="com.naver.naverlogintutorial.captcha.dao.NaverCaptchaDAOImpl" />
+	
+</beans>
