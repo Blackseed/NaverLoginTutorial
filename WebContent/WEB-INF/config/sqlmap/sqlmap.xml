@@ -15,14 +15,6 @@
 		<result property="modifyDate" column="modify_date" />
 	</resultMap>
 
-	<resultMap id="snsUserResultMap" type="SnsUser" extends="userResultMap">
-		<result property="snsId" column="sns_id" />
-		<result property="snsType" column="sns_type" />
-		<result property="snsName" column="sns_name" />
-		<result property="snsProfile" column="sns_profile" />
-		<result property="snsConnectDate" column="sns_connect_date" />
-
-	</resultMap>
 
 
 	<select id="selectUserById" resultMap="userResultMap">
@@ -36,27 +28,6 @@
 	</select>
 
 
-	<select id="selectSnsUserBySnsId" resultMap="snsUserResultMap">
-		select 	a.username,
-				a.password,
-				a.email,
-				a.nickname,
-				a.mobile,
-				a.create_date,
-				a.modify_date,
-				b.sns_id,
-				b.sns_type,
-				b.sns_name,
-				b.sns_profile,
-				b.sns_connect_date				 
-		from 	users a,
-				sns_info b
-		where
-				a.id = b.id
-			AND b.sns_id = #{snsId}
-	</select>
-
-
 	<insert id="insertNormalUser" parameterType="User">
 		insert into	users(username, password, email, nickname, mobile, create_date, modify_date )
 			values	(#{userName}, #{password},#{email}, #{nickName}, #{mobile}, now(), now())
@@ -64,12 +35,6 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-	
-	<insert id="insertSnsUser" parameterType="SnsUser">
-		insert into sns_info(id, sns_id, sns_type, sns_name, sns_profile, sns_connect_date)
-			values (#{id}, #{snsId}, #{snsType}, #{snsName}, #{snsProfile}, now() )
-	</insert>
-
 
 
 </mapper>

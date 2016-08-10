@@ -170,12 +170,12 @@
 								<button id="btn-join" type="button" class="btn btn-info">
 									<i class="icon-hand-right"></i> &nbsp; 다음단계로 
 								</button>
-								<span style="margin-left: 8px;">or</span>
+								<!-- span style="margin-left: 8px;">or</span-->
 							</div>
 
 						</div>
 
-						<div class="form-group">
+						<!-- div class="form-group">
 
 							<div class="col-md-offset-3 col-md-9">
 								<a href="${url}"><img
@@ -183,7 +183,7 @@
 									height=34 /></a>
 							</div>
 
-						</div>
+						</div-->
 
 					</form>
 					</div>

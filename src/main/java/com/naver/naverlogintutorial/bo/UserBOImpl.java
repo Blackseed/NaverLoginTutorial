@@ -87,10 +87,7 @@ public class UserBOImpl implements UserBO{
 
 	@Override
 	public SnsUser getUserByNaverUser(NaverUser naverUser) {
-		if(naverUser != null){
-			String snsId = naverUser.getId();
-			return (SnsUser)userDAO.getUserBySnsId(snsId);
-		}
+		/* TODO: implement */
 		return null;
 	}
 	
@@ -102,8 +99,8 @@ public class UserBOImpl implements UserBO{
 	
 	@Override
 	public SnsUser createNewUserBySnsUser(NaverUser naverUser, String username) {
-		SnsUser newUser = userDAO.insertUser(naverUser, username);
-		return newUser;
+		/* TODO: implement */
+		return null;
 	}
 	
 	

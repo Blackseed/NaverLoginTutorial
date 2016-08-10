@@ -62,10 +62,10 @@
 							<!-- Button -->
 
 							<div class="col-sm-12 controls">
-								<a id="btn-login" href="#" onclick="javascript:do_login()" class="btn btn-primary">Login </a> <a
+								<a id="btn-login" href="#" onclick="javascript:do_login()" class="btn btn-primary">Login </a> <!-- a
 									href="${url}"><img
 									src="<c:url value="/images/naverid_login_button.png" />"
-									height=34 /></a>
+									height=34 /></a-->
 
 							</div>
 						</div>

@@ -127,35 +127,35 @@ public class NaverLoginTutorial {
     }
     
     
-    @RequestMapping("/join/sns/done")
-    public ModelAndView joinSnsDone(HttpServletRequest request, HttpSession session) {
-    	
-    	String captchaInput = request.getParameter("captchaInput");
-    	String captchaKey = request.getParameter("captchaKey");
-    	String username = request.getParameter("username");
-    	
-    	NaverUser naverUser = userBO.getNaverUserSession(session);
-    	
-    	if(captchaBO.isValidCaptcha(captchaKey, captchaInput)){
-    		
-    		SnsUser newUser = userBO.createNewUserBySnsUser(naverUser, username);
-    		userBO.initSession(session);
-    		userBO.setSnsUserSession(session, newUser);
-    		return new ModelAndView("redirect:/account");
-    		
-    	} else {
-    		captchaKey = captchaBO.getCaptchaKey();
-    		String captchaImageUrl = captchaBO.getCaptchaImageUrl(captchaKey);
-    		Map<String,Object> paramMap = new HashMap<String,Object>();
-    		paramMap.put("captchaKey", captchaKey);
-    		paramMap.put("captchaImageUrl", captchaImageUrl);
-    		paramMap.put("user", naverUser);
-    		paramMap.put("suggestUserName", username);
-    		paramMap.put("errorMessage", CommonErrorCode.INVALID_CAPTCHA.getErrorText());
-    		
-    		return new ModelAndView("join_sns_confirm", paramMap);
-    	}
-    }
+//    @RequestMapping("/join/sns/done")
+//    public ModelAndView joinSnsDone(HttpServletRequest request, HttpSession session) {
+//    	
+//    	String captchaInput = request.getParameter("captchaInput");
+//    	String captchaKey = request.getParameter("captchaKey");
+//    	String username = request.getParameter("username");
+//    	
+//    	NaverUser naverUser = userBO.getNaverUserSession(session);
+//    	
+//    	if(captchaBO.isValidCaptcha(captchaKey, captchaInput)){
+//    		
+//    		SnsUser newUser = userBO.createNewUserBySnsUser(naverUser, username);
+//    		userBO.initSession(session);
+//    		userBO.setSnsUserSession(session, newUser);
+//    		return new ModelAndView("redirect:/account");
+//    		
+//    	} else {
+//    		captchaKey = captchaBO.getCaptchaKey();
+//    		String captchaImageUrl = captchaBO.getCaptchaImageUrl(captchaKey);
+//    		Map<String,Object> paramMap = new HashMap<String,Object>();
+//    		paramMap.put("captchaKey", captchaKey);
+//    		paramMap.put("captchaImageUrl", captchaImageUrl);
+//    		paramMap.put("user", naverUser);
+//    		paramMap.put("suggestUserName", username);
+//    		paramMap.put("errorMessage", CommonErrorCode.INVALID_CAPTCHA.getErrorText());
+//    		
+//    		return new ModelAndView("join_sns_confirm", paramMap);
+//    	}
+//    }
     
     
     
@@ -177,34 +177,35 @@ public class NaverLoginTutorial {
             return new ModelAndView("login", paramMap);
     	}
     }
- 
-    @RequestMapping("/callback")
-    public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
-    	OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
-        NaverUser naverUser = naverLoginBO.getUserProfile(oauthToken);
-        
-        SnsUser snsUser = userBO.getUserByNaverUser(naverUser);
-        
-        /* 네이버 아이디로 로그인을 통해 등록된적이 없는 사용자의 경우 신규 등록으로 처리 */
-        if(snsUser == null){
-        	 /*  네이버 프로필을 세션에 저장하고 추가정보를 받는 페이지로 이동 */
-        	userBO.setNaverUserSession(session, naverUser);
-        	String captchaKey = captchaBO.getCaptchaKey();
-        	String captchaImageUrl = captchaBO.getCaptchaImageUrl(captchaKey);
-        	Map<String,Object> paramMap = new HashMap<String,Object>();
-        	paramMap.put("captchaKey", captchaKey);
-        	paramMap.put("captchaImageUrl", captchaImageUrl);
-        	paramMap.put("user", naverUser);
-        	paramMap.put("suggestUserName", userBO.getSuggestUserNameFromEmail(naverUser.getEmail()));
-        	
-        	return new ModelAndView("join_sns_confirm", paramMap);
-        	
-        	
-        }      	 
-        	
-        userBO.setSnsUserSession(session, snsUser);
-        return new ModelAndView("redirect:/account");
-    }
+    
+    
+//    @RequestMapping("/callback")
+//    public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
+//    	OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
+//        NaverUser naverUser = naverLoginBO.getUserProfile(oauthToken);
+//        
+//        SnsUser snsUser = userBO.getUserByNaverUser(naverUser);
+//        
+//        /* 네이버 아이디로 로그인을 통해 등록된적이 없는 사용자의 경우 신규 등록으로 처리 */
+//        if(snsUser == null){
+//        	 /*  네이버 프로필을 세션에 저장하고 추가정보를 받는 페이지로 이동 */
+//        	userBO.setNaverUserSession(session, naverUser);
+//        	String captchaKey = captchaBO.getCaptchaKey();
+//        	String captchaImageUrl = captchaBO.getCaptchaImageUrl(captchaKey);
+//        	Map<String,Object> paramMap = new HashMap<String,Object>();
+//        	paramMap.put("captchaKey", captchaKey);
+//        	paramMap.put("captchaImageUrl", captchaImageUrl);
+//        	paramMap.put("user", naverUser);
+//        	paramMap.put("suggestUserName", userBO.getSuggestUserNameFromEmail(naverUser.getEmail()));
+//        	
+//        	return new ModelAndView("join_sns_confirm", paramMap);
+//        	
+//        	
+//        }      	 
+//        	
+//        userBO.setSnsUserSession(session, snsUser);
+//        return new ModelAndView("redirect:/account");
+//    }
     
     @RequestMapping("/account")
     public ModelAndView account(HttpSession session){

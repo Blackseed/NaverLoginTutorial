@@ -26,7 +26,8 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public User getUserBySnsId(String snsId) {
-		return (User)baseDAO.selectOne(NAMESPACE + "selectSnsUserBySnsId", snsId);
+		/* TODO: implement */
+		return null;
 	}
 	
 	@Override
@@ -38,12 +39,8 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public SnsUser insertUser(NaverUser naverUser, String username) {
 		
-		SnsUser user = new SnsUser(username, naverUser);
-		baseDAO.insert(NAMESPACE + "insertNormalUser", (User)user);
-		User newUser = getUserByUserName(user.getUserName());
-		user.setId(newUser.getId());
-		baseDAO.insert(NAMESPACE + "insertSnsUser", user);
-		return (SnsUser)getUserBySnsId(user.getSnsId());
+		/* TODO: implement */
+		return null;
 	}
 
 }
